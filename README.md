@@ -11,14 +11,11 @@
 _✨ 基于 [NoneBot2](https://v2.nonebot.dev/) 的语音功能适配插件 ✨_
 
 <p align="center">
-  <img src="https://img.shields.io/github/license/itsevin/nonebot-plugin-record" alt="license">
+  <img src="https://img.shields.io/github/license/itsevin/nonebot_plugin_record" alt="license">
   <img src="https://img.shields.io/badge/python-3.8+-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/nonebot-2.0.0b4+-red.svg" alt="NoneBot">
   <a href="https://pypi.org/project/nonebot-plugin-record">
     <img src="https://badgen.net/pypi/v/nonebot-plugin-record" alt="pypi">
-  </a>
-  <a href="https://pypi.python.org/pypi/nonebot-plugin-record">
-      <img src="https://img.shields.io/pypi/dm/nonebot-plugin-recordi" alt="pypi download">
   </a>
 </p>
 
@@ -184,6 +181,10 @@ async def get_data(msg):
 ```
 
 ## 更新日志
+
+### 2021/1/15 \[v1.0.1]
+
+- 适配Nonebot2商店插件自动检测，删除配置文件报错提醒
 
 ### 2023/1/15 \[v1.0.0]
 
