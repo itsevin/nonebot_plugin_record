@@ -113,6 +113,7 @@ event: Event 对象
 from nonebot import require
 require('nonebot_plugin_record')
 from nonebot_plugin_record import get_text
+from nonebot.adapters.onebot.v11 import Event, Bot
 
 # 事件处理中获取文本
 text = await get_text(bot=bot, event=event)
@@ -150,7 +151,7 @@ from nonebot.adapters.onebot.v11 import (
 )
 from nonebot import require
 require('nonebot_plugin_record')
-from src.plugins.nonebot_plugin_record import (
+from nonebot_plugin_record import (
     on_record,
     get_text,
     record_tts
@@ -182,7 +183,11 @@ async def get_data(msg):
 
 ## 更新日志
 
-### 2021/1/15 \[v1.0.1]
+### 2023/1/15 \[v1.0.2]
+
+- 修改错误
+
+### 2023/1/15 \[v1.0.1]
 
 - 适配Nonebot2商店插件自动检测，删除配置文件报错提醒
 
