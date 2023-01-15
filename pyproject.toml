@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "nonebot-plugin-record"
+version = "1.0.0"
+description = "基于 Nonebot2 的语音功能适配插件，包括语音事件响应器，语音识别、语音合成等功能"
+authors = ["ITSevin <itsevin@qq.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/itsevin/nonebot_plugin_record"
+repository = "https://github.com/itsevin/nonebot_plugin_record"
+documentation = "https://github.com/itsevin/nonebot_plugin_record#readme"
+keywords = ["nonebot", "nonebot2", "nonebot_plugin_record"]
+packages = [{include = "nonebot_plugin_record/*.py"}]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+nonebot2 = "^2.0.0-beta.1"
+nonebot-adapter-onebot = "^2.0.0-beta.1"
+pilk = "^0.2.3"
+httpx = "^0.23.3"
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
