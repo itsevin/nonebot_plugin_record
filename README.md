@@ -32,7 +32,7 @@ _✨ 基于 [NoneBot2](https://v2.nonebot.dev/) 的语音功能适配插件 ✨_
 - 使用 nb-cli
 
 ```
-nb plugin install nonebot_plugin_record
+nb plugin install nonebot-plugin-record
 ```
 
 - 使用 pip
