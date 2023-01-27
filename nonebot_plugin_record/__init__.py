@@ -62,7 +62,7 @@ async def get_text(bot: Bot, event: Event):
     if plugin_config.nonebot_plugin_gocqhttp is True:
         path_amr = "./accounts/" + bot.self_id + "/data/voices/" + event.get_message()[0].data["file"]
     else:
-        path_amr = "./data/voices" + event.get_message()[0].data["file"]
+        path_amr = "./data/voices/" + event.get_message()[0].data["file"]
     path_pcm = path_amr[0:-4] + ".pcm"
     pilk.decode(path_amr, path_pcm)
     with open(path_pcm, 'rb') as f:
