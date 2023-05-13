@@ -1,3 +1,4 @@
+from nonebot import logger
 from datetime import datetime
 import httpx
 import hashlib
@@ -57,6 +58,7 @@ async def _get_authorization(params):
                      "Credential=" + secret_id + "/" + credential_scope + ", " +
                      "SignedHeaders=" + signed_headers + ", " +
                      "Signature=" + signature)
+    logger.debug("get_authorization Succeeded")
     return authorization
 
 
@@ -82,6 +84,15 @@ async def tencent_get_text(speech, length):
         "X-TC-Timestamp": str(timestamp),
     }
     async with httpx.AsyncClient() as client:
-        resp = await client.post(url, headers=headers, json=data)
-        text = json.loads(resp.text)["Response"]["Result"]
-    return text
+        try:
+            resp = await client.post(url, headers=headers, json=data)
+            if "error" not in json.loads(resp.text)["Response"]:
+                text = json.loads(resp.text)["Response"]["Result"]
+                logger.debug("tencent_get_text Succeeded")
+                return text
+            else:
+                logger.error(f"语音识别接口报错，返回内容：{resp.text}")
+                return None
+        except:
+            logger.error("请求语音识别接口失败，请检查网络环境或重试")
+            return None

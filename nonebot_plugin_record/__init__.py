@@ -1,11 +1,15 @@
-from nonebot import on_message
 from nonebot.matcher import Matcher
 from nonebot.rule import Rule
 from nonebot.typing import T_RuleChecker
+from nonebot import (
+    on_message,
+    logger
+)
 from nonebot.adapters.onebot.v11 import (
     Message,
     Event,
-    Bot
+    Bot,
+    MessageSegment
 )
 
 import base64
@@ -48,6 +52,7 @@ def on_record(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    logger.debug("Starting To Register The Voice Event Responder")
     return on_message(rule=Rule(type_checker) & rule, **kwargs)
 
 
@@ -69,13 +74,25 @@ async def get_text(bot: Bot, event: Event):
         speech = base64.b64encode(f.read()).decode('utf-8')
     length = os.path.getsize(path_pcm)
     os.remove(path_pcm)
-    if plugin_config.asr_api_provider == "baidu":
-        text = await baidu_get_text(speech, length)
-    elif plugin_config.asr_api_provider == "tencent":
-        text = await tencent_get_text(speech, length)
-    else:
+    if length == 0:
+        logger.error("加载音频文件失败，请检查nonebot_plugin_gocqhttp配置项是否填写正确")
         return None
-    return text
+    else:
+        logger.debug("Successfully Load The Audio file")
+        if plugin_config.asr_api_provider == "baidu":
+            text = await baidu_get_text(speech, length)
+            logger.debug("Using Baidu API")
+            return text
+        elif plugin_config.asr_api_provider == "tencent":
+            text = await tencent_get_text(speech, length)
+            logger.debug("Using Tencent API")
+            return text
+        elif plugin_config.asr_api_provider == None:
+            logger.error("获取配置失败，请检查asr_api_provider配置项是否正确填写")
+            return None
+        else:
+            logger.error("配置填写错误，asr_api_provider配置只能填写“baidu”或“tencent”")
+            return None
 
 
 def record_tts(pattern: str):
@@ -85,4 +102,5 @@ def record_tts(pattern: str):
     参数:
         pattern: 要进行转换的字符串
     """
-    return Message("[CQ:tts,text=" + pattern + "]")
+    logger.debug("Starting To Retrieve TTS (Text-to-Speech) Message Object")
+    return MessageSegment("tts", {"text": pattern})

@@ -119,6 +119,8 @@ from nonebot.adapters.onebot.v11 import Event, Bot
 text = await get_text(bot=bot, event=event)
 ```
 
+> 当函数出错时会返回None，具体报错信息请前往Nonebot2进程日志查看
+
 ### 获取文本转换的语音的```Message```对象
 
 获取文本转换的语音的Message对象的异步函数：```record_tts```()
@@ -181,7 +183,20 @@ async def get_data(msg):
 
 ```
 
+## 有问题怎么办？
+
+1. 确认是不是你自己的插件的问题
+2. 确认是否正确按照本插件使用说明使用
+3. 排查日志，通过日志内容尝试找出问题并自行解决
+4. 在配置文件中配置```LOG_LEVEL=DEBUG```，然后在日志中查看debug日志，并同时根据本插件源码尝试找出问题并自行解决（确认是本插件的问题可以提issue或者pr）
+5. 问题仍未解决可以提issue，要求提供详细问题描述和较为完整的debug级别的相关日志
+
 ## 更新日志
+
+### 2023/5/13 \[v1.0.4]
+
+- 重构代码，舍弃CQ码过时写法
+- 增加dubug和info级别的日志输出
 
 ### 2023/1/27 \[v1.0.3]
 

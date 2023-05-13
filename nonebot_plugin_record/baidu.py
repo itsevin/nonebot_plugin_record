@@ -1,3 +1,4 @@
+from nonebot import logger
 import httpx
 import json
 
@@ -14,6 +15,7 @@ async def _get_token():
     async with httpx.AsyncClient() as client:
         resp = await client.get(url)
         token = json.loads(resp.text)["access_token"]
+    logger.debug("get_token Succeeded")
     return token
 
 
@@ -33,6 +35,15 @@ async def baidu_get_text(speech, length):
         'Accept': 'application/json'
     }
     async with httpx.AsyncClient() as client:
-        resp = await client.post(url, headers=headers, json=data)
-        text = json.loads(resp.text)["result"][0]
-    return text
+        try:
+            resp = await client.post(url, headers=headers, json=data)
+            if json.loads(resp.text)["err_msg"] == "success.":
+                text = json.loads(resp.text)["result"][0]
+                logger.debug("baidu_get_text Succeeded")
+                return text
+            else:
+                logger.error(f"语音识别接口报错，返回内容：{resp.text}")
+                return None
+        except:
+            logger.error("请求语音识别接口失败，请检查网络环境或重试")
+            return None
