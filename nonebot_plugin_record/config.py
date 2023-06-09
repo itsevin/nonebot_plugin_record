@@ -9,6 +9,7 @@ from pydantic import (
 
 class Config(BaseModel, extra=Extra.ignore):
     nonebot_plugin_gocqhttp: Optional[bool] = False
+    gocqhttp_address: Optional[str] = './'
     asr_api_provider: str = None
     asr_api_key: str = None
     asr_secret_key: str = None

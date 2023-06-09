@@ -67,25 +67,34 @@ async def get_text(bot: Bot, event: Event):
     if plugin_config.nonebot_plugin_gocqhttp is True:
         path_amr = "./accounts/" + bot.self_id + "/data/voices/" + event.get_message()[0].data["file"]
     else:
-        path_amr = "./data/voices/" + event.get_message()[0].data["file"]
+        path_amr = plugin_config.gocqhttp_address + "data/voices/" + event.get_message()[0].data["file"]
     path_pcm = path_amr[0:-4] + ".pcm"
-    pilk.decode(path_amr, path_pcm)
+    try:
+        pilk.decode(path_amr, path_pcm)
+    except OSError:
+        logger.error("转换音频文件失败，尝试转换的音频文件目录为 " + path_amr + " ,请检查nonebot_plugin_gocqhttp配置项和gocqhttp_address配置项是否正确填写或是否有文件权限问题")
+        return None
+    except:
+        logger.error("转换音频文件失败，发生未知错误")
+        return None
+    else:
+        logger.debug("Successfully Transform The Audio file")
     with open(path_pcm, 'rb') as f:
         speech = base64.b64encode(f.read()).decode('utf-8')
     length = os.path.getsize(path_pcm)
     os.remove(path_pcm)
     if length == 0:
-        logger.error("加载音频文件失败，请检查nonebot_plugin_gocqhttp配置项是否填写正确")
+        logger.error("转换音频文件成功，但加载音频文件失败，发生未知错误")
         return None
     else:
         logger.debug("Successfully Load The Audio file")
         if plugin_config.asr_api_provider == "baidu":
-            text = await baidu_get_text(speech, length)
             logger.debug("Using Baidu API")
+            text = await baidu_get_text(speech, length)
             return text
         elif plugin_config.asr_api_provider == "tencent":
-            text = await tencent_get_text(speech, length)
             logger.debug("Using Tencent API")
+            text = await tencent_get_text(speech, length)
             return text
         elif plugin_config.asr_api_provider == None:
             logger.error("获取配置失败，请检查asr_api_provider配置项是否正确填写")

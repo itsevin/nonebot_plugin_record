@@ -41,14 +41,36 @@ nb plugin install nonebot-plugin-record
 pip install nonebot_plugin_record
 ```
 
+## 兼容性
+
+### 支持的go-cqhttp（最新版本）协议
+
+|      |      |      |      |
+| ---- | ---- | ---- | ---- |
+|   protocol   |   协议   |   收语音   |   发语音   |
+|   1   |   phone   |   未知   |   未知   |
+|   2   |   watch   |   不兼容   |   兼容   |
+|   3   |   MacOS   |   兼容   |   不兼容   |
+|   4   |   企点   |   未知   |   未知   |
+|   5   |   iPad   |   兼容   |   兼容   |
+|   6   |   aPad   |   兼容   |   不兼容   |
+
+
+> 未知是未测试的情况；不兼容是没通过我的测试的情况，不一定准确，可能是我自己账号的封控问题，具体请自行测试
+
+发现实际与我测试结果有出入的欢迎来这里讨论 https://github.com/itsevin/nonebot_plugin_record/issues/1
+
 ## 配置项
 
 ```
-asr_api_provider="" #必填，API提供商，填写“baidu”或“tencent”
-asr_api_key="" #必填，百度智能云的API_KRY或腾讯云的SECRET_ID
-asr_secret_key="" #必填，百度智能云的SECRET_KRY或腾讯云的SECRET_KEY
-nonebot_plugin_gocqhttp=False #选填，是否使用nonebot2插件版本的go-cqhttp，默认为False
+asr_api_provider="" # 必填，API提供商，填写“baidu”或“tencent”
+asr_api_key="" # 必填，百度智能云的API_KRY或腾讯云的SECRET_ID
+asr_secret_key="" # 必填，百度智能云的SECRET_KRY或腾讯云的SECRET_KEY
+nonebot_plugin_gocqhttp=False # 选填，是否使用nonebot2插件版本的go-cqhttp，默认为False
+gocqhttp_address="" # 选填，非插件版本go-cqhttp的运行目录，默认为“./”，非插件版本go-cqhttp和nonebot运行目录不同时须填写，插件版本不用填写， nonebot_plugin_gocqhttp=True 时该配置无效
 ```
+
+> gocqhttp_address 配置项可填绝对路径（如 /root/gocqhttp/ ）或相对路径（如 ../../gocqhttp/ ）
 
 ## API选择与配置
 
@@ -192,6 +214,11 @@ async def get_data(msg):
 5. 问题仍未解决可以提issue，要求提供详细问题描述和较为完整的debug级别的相关日志
 
 ## 更新日志
+
+### 2023/6/8 \[v1.0.5]
+
+- 修复非插件版本go-cqhttp和nonebot运行目录不相同时的问题
+- 优化日志输出
 
 ### 2023/5/13 \[v1.0.4]
 
