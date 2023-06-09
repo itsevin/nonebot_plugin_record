@@ -67,7 +67,7 @@ asr_api_provider="" # 必填，API提供商，填写“baidu”或“tencent”
 asr_api_key="" # 必填，百度智能云的API_KRY或腾讯云的SECRET_ID
 asr_secret_key="" # 必填，百度智能云的SECRET_KRY或腾讯云的SECRET_KEY
 nonebot_plugin_gocqhttp=False # 选填，是否使用nonebot2插件版本的go-cqhttp，默认为False
-gocqhttp_address="" # 选填，非插件版本go-cqhttp的运行目录，默认为“./”，非插件版本go-cqhttp和nonebot运行目录不同时须填写，插件版本不用填写， nonebot_plugin_gocqhttp=True 时该配置无效
+gocqhttp_address="./" # 选填，非插件版本go-cqhttp的运行目录，默认为“./”，非插件版本go-cqhttp和nonebot运行目录不同时须填写，插件版本不用填写， nonebot_plugin_gocqhttp=True 时该配置无效
 ```
 
 > gocqhttp_address 配置项可填绝对路径（如 /root/gocqhttp/ ）或相对路径（如 ../../gocqhttp/ ）
